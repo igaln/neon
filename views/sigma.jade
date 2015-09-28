@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1
+   a(href="/") < 
+   |  = #{title}  
+  p
+   form(name="newgraph", action="/graph", method="post")
+    input(type="name", name="name")
+    input(type="submit", value="ADD NEW")
+  #graph-container
+  script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+  script(src='/socket.io/socket.io.js')
+  script(src='/javascripts/sigma.min.js')
+  script(src='/javascripts/plugins/sigma.layout.forceAtlas2.min.js')
+  script(type='text/javascript').
+   $(document).ready(function() {
+  
+    g=!{JSON.stringify(graph)};   
+    console.log(g);
+
+    // Instantiate sigma:
+    s = new sigma({
+      graph: g,
+      container: 'graph-container',
+      type: 'webgl'//,
+      //- settings: {
+      //-   drawEdges: false
+      //- }
+    });
+
+    s.startForceAtlas2({worker: false, barnesHutOptimize: true,adjustSizes:true,barnesHutTheta:1.0,iterationsPerRender:1,gravity:2.5,strongGravityMode:true});
+
+    });

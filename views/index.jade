@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p
+   div.loginbox
+    form(name="newgraph", action="/graph", method="post")
+     input(type="name", name="name")
+     input(type="submit", value="ADD NEW")
+  p
+   ul
+    for result in results
+     li.row 
+      a(href="/graph/#{result.id}") #{result.name}
+      form(action="/graph/delete" name="deletevalue" method="post")
+       input(type="hidden", name="deletevalue" value=result.id)
+       input(type="submit", value="X")
+
